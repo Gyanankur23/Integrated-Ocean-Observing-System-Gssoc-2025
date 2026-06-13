@@ -1,84 +1,125 @@
-IOOS Tool Data Interface
+# IOOS Tool Data Interface
 
-Description
-  
-This project is part of the Google Summer of Code 2025 initiative, aimed at contributing to the IOOS (Integrated Ocean Observing System) by developing web-based user interfaces for their tools. Using Python, Pyodide, Pyscript, HTML, CSS, and JavaScript, this solution streamlines data management, quality control, and user engagement.
+![GSSOC 2025](https://img.shields.io/badge/GSSOC-2025-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Deployment](https://img.shields.io/badge/deployment-Vercel-black)
 
-The interface allows users to: 
- 
-- Upload datasets in CSV format.  
+## 🌊 Overview
 
-- Preview the uploaded dataset in a table format.  
+This project is part of the Google Summer of Code 2025 initiative, aimed at contributing to the IOOS (Integrated Ocean Observing System) by developing web-based user interfaces for their tools. Using Python, Pyodide, PyScript, HTML, CSS, and JavaScript, this solution streamlines data management, quality control, and user engagement.
 
-- Perform Quality Control (QC) checks using IOOS tools like ioos-qc.
+The interface enables researchers and data scientists to perform oceanographic data quality control directly in their web browser without any local setup or installation.
 
-This repository includes fully functional code files along with instructions on how to use them effectively.
+## ✨ Features
 
-Project Details  
+- **📤 CSV Upload**: Upload oceanographic datasets in CSV format through an intuitive interface
+- **👁️ Data Preview**: Interactive table view for inspecting uploaded datasets
+- **🔍 Quality Control**: Run IOOS QC checks using the ioos-qc library
+- **🌐 Browser-based**: No local Python installation required - everything runs in the browser
+- **📱 Responsive Design**: Mobile-friendly interface for field researchers
+- **⚡ Real-time Results**: Instant QC feedback and validation results
 
-Title: Build Web UI Versions Using Pyodide/Pyscript for IOOS Tools  
+## 🏗️ Architecture
 
-Contributor: Gyanankur Baruah 
- 
-Technologies Used: Python, Pyodide, Pyscript, HTML, CSS, JavaScript, and IOOS tools.  
+```
+├── IOOS.html          # Main HTML interface
+├── IOOS.css           # Styling and responsive design
+├── IOOS.js            # JavaScript for file handling and DOM manipulation
+├── IOOS.py            # Python script for QC checks (PyScript)
+├── README.md          # Project documentation
+└── Hackathon.md       # Hackathon submission details
+```
 
-Purpose: To enhance accessibility and usability of IOOS data validation tools through interactive web interfaces.
+## 🛠️ Technologies Used
 
-File Structure  
+- **Pyodide**: Python runtime for the browser
+- **PyScript**: Framework for running Python in HTML
+- **ioos-qc**: IOOS quality control library
+- **Pandas**: Data manipulation and analysis
+- **HTML5/CSS3**: Modern web interface
+- **JavaScript**: Client-side file handling and DOM manipulation
+- **Vercel**: Cloud deployment platform
 
-IOOS.html: The main HTML file for the web interface.  
+## 🚀 Getting Started
 
-IOOS.css: The CSS file for styling the interface.  
+### Prerequisites
 
-IOOS.js: JavaScript file for handling dataset uploads and rendering.  
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+- No local installation required
 
-IOOS.py: Python script for running IOOS-specific Quality Control checks using Pyodide/Pyscript.
+### Installation
 
-How to Use  
+1. Clone the repository:
+```bash
+git clone https://github.com/Gyanankur23/Integrated-Ocean-Observing-System-Gssoc-2025.git
+cd Integrated-Ocean-Observing-System-Gssoc-2025
+```
 
-1. Clone the Repository  
+2. Open `IOOS.html` in your web browser
 
-git clone
- https://github.com/Gyanankur23/alfridotechrepositoryall3tasks.git
+### Usage
 
+1. **Upload Dataset**: Click on the "Upload Dataset" button and select a CSV file containing oceanographic data
+2. **Preview Data**: The uploaded dataset will be displayed in an interactive table
+3. **Run QC Checks**: Click on the "Run Quality Control (QC) Checks" button to validate the data
+4. **View Results**: QC results will appear below the table in the "QC Results" section
 
-cd alfridotechrepositoryall3tasks
+### Example Workflow
 
-2. File Details  
+```bash
+1. Upload a CSV file containing oceanographic data (e.g., temperature, salinity measurements)
+2. View the dataset in the interactive table
+3. Perform quality control checks (validating data entries, checking for anomalies)
+4. Review QC results directly in the browser interface
+```
 
-Open IOOS.html in your browser to launch the interface.  
-Ensure all associated files (IOOS.css, IOOS.js, IOOS.py) are in the same directory.  
+## 🔧 Configuration
 
-3. Workflow  
+To customize quality control checks, modify the QC configuration in `IOOS.py`:
 
-Upload Dataset:  
+```python
+# Load QC configuration (path to configuration YAML file)
+qc.load_cfg("path_to_qc_config.yaml")  # Replace with your QC configuration file
+```
 
-Click on the "Upload Dataset" button and select a CSV file.  
-The uploaded dataset will be displayed in a table for preview.  
+## 🌐 Deployment
 
-Run QC Checks:  
+This project is deployed on Vercel. To deploy your own version:
 
-Click on the "Run Quality Control (QC) Checks" button.  
-The Python script IOOS.py will process the dataset using the ioos-qc library.  
-QC results will appear below the table in the "QC Results" section.  
+1. Push the code to GitHub
+2. Import the repository in Vercel
+3. Deploy with default settings
 
-4. Modify QC Configurations  
+## 📊 Project Details
 
-To run specific quality control checks, update the QC configuration file path in the Python code (IOOS.py) as needed.
+- **Title**: Build Web UI Versions Using Pyodide/PyScript for IOOS Tools
+- **Contributor**: Gyanankur Baruah
+- **Hackathon**: GSSOC 2025
+- **Purpose**: Enhance accessibility and usability of IOOS data validation tools through interactive web interfaces
 
-Example Workflow  
+## 🔗 Links
 
-1. Upload a CSV file containing oceanographic data.  
-2. View the dataset in the table.  
-3. Perform quality control checks (e.g., validating data entries, checking for anomalies).  
-4. View the QC results directly in the browser interface.
+- **GitHub Repository**: https://github.com/Gyanankur23/Integrated-Ocean-Observing-System-Gssoc-2025
+- **Live Demo**: [Deployed on Vercel]
+- **IOOS Documentation**: https://ioos.noaa.gov/
 
-Accessing the Project  
+## 📧 Contact
 
-Find the project on GitHub here:
- https://github.com/Gyanankur23/alfridotechrepositoryall3tasks
+For inquiries or feedback:
+- **Email**: gyanankurcricket20@gmail.com
+- **GitHub**: https://github.com/Gyanankur23
 
-GSOC 2025  
+## 📄 License
 
+This project is open source and available under the MIT License.
 
-This project is a contribution for the Google Summer of Code 2025 initiative, showcasing innovation in open-source tools and technologies to improve oceanographic data processing and accessibility.
+## 🙏 Acknowledgments
+
+- Google Summer of Code 2025
+- Integrated Ocean Observing System (IOOS)
+- IOOS Quality Control (ioos-qc) library
+- PyScript and Pyodide communities
+
+---
+
+**Note**: This project is a contribution for the Google Summer of Code 2025 initiative, showcasing innovation in open-source tools and technologies to improve oceanographic data processing and accessibility.
