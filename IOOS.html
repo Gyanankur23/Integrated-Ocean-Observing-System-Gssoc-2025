@@ -3,31 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOOS Tool Interface</title>
+    <title>IOOS Tool Data Interface</title>
     <link rel="stylesheet" href="IOOS.css">
-    <script src="IOOS.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script src="IOOS.js" defer></script>
 </head>
 <body>
-    <h1>IOOS Tool Data Interface</h1>
-    <div id="upload-section">
-        <label for="file-upload">Upload Dataset (CSV):</label>
-        <input type="file" id="file-upload">
-        <button id="process-button">Process Dataset</button>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-water"></i>
+                    <h1>IOOS Tool Data Interface</h1>
+                </div>
+                <p class="subtitle">Integrated Ocean Observing System - Quality Control Dashboard</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="upload-section" id="upload-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-upload"></i> Upload Dataset</h2>
+                    <p class="section-description">Upload your oceanographic data in CSV format for quality control analysis</p>
+                </div>
+                
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <p class="upload-text">Drag and drop your CSV file here or</p>
+                    <label for="file-upload" class="upload-button">
+                        <i class="fas fa-folder-open"></i> Browse Files
+                    </label>
+                    <input type="file" id="file-upload" accept=".csv" hidden>
+                    <p class="upload-hint">Supported format: CSV (max 10MB)</p>
+                </div>
+
+                <div class="file-info" id="file-info" style="display: none;">
+                    <div class="file-details">
+                        <i class="fas fa-file-csv"></i>
+                        <span id="file-name"></span>
+                        <span id="file-size"></span>
+                    </div>
+                    <button class="remove-file" id="remove-file">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <button class="process-button" id="process-button" disabled>
+                    <i class="fas fa-cogs"></i> Process Dataset
+                </button>
+            </section>
+
+            <section class="data-preview-section" id="data-preview-section" style="display: none;">
+                <div class="section-header">
+                    <h2><i class="fas fa-table"></i> Dataset Preview</h2>
+                    <p class="section-description">Review your uploaded oceanographic data</p>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Search data...">
+                        </div>
+                        <div class="table-info">
+                            <span id="row-count">0 rows</span>
+                            <span id="col-count">0 columns</span>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="data-table">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="qc-section" id="qc-section" style="display: none;">
+                <div class="section-header">
+                    <h2><i class="fas fa-check-circle"></i> Quality Control</h2>
+                    <p class="section-description">Run IOOS quality control checks on your dataset</p>
+                </div>
+
+                <div class="qc-options">
+                    <div class="qc-option">
+                        <input type="checkbox" id="qc-range" checked>
+                        <label for="qc-range">Range Check</label>
+                    </div>
+                    <div class="qc-option">
+                        <input type="checkbox" id="qc-climatology" checked>
+                        <label for="qc-climatology">Climatology Check</label>
+                    </div>
+                    <div class="qc-option">
+                        <input type="checkbox" id="qc-spikes" checked>
+                        <label for="qc-spikes">Spike Detection</label>
+                    </div>
+                    <div class="qc-option">
+                        <input type="checkbox" id="qc-gradient" checked>
+                        <label for="qc-gradient">Gradient Check</label>
+                    </div>
+                </div>
+
+                <button class="qc-button" id="quality-check-button">
+                    <i class="fas fa-microscope"></i> Run Quality Control Checks
+                </button>
+
+                <div class="loading-indicator" id="loading-indicator" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Running quality control checks...</p>
+                </div>
+            </section>
+
+            <section class="results-section" id="results-section" style="display: none;">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-bar"></i> QC Results</h2>
+                    <p class="section-description">Quality control analysis results and recommendations</p>
+                </div>
+
+                <div class="results-summary">
+                    <div class="summary-card total">
+                        <i class="fas fa-database"></i>
+                        <div class="summary-content">
+                            <span class="summary-label">Total Records</span>
+                            <span class="summary-value" id="total-records">0</span>
+                        </div>
+                    </div>
+                    <div class="summary-card passed">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="summary-content">
+                            <span class="summary-label">Passed</span>
+                            <span class="summary-value" id="passed-records">0</span>
+                        </div>
+                    </div>
+                    <div class="summary-card failed">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div class="summary-content">
+                            <span class="summary-label">Failed</span>
+                            <span class="summary-value" id="failed-records">0</span>
+                        </div>
+                    </div>
+                    <div class="summary-card warning">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="summary-content">
+                            <span class="summary-label">Warnings</span>
+                            <span class="summary-value" id="warning-records">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-details">
+                    <h3>Detailed Results</h3>
+                    <div id="qc-results"></div>
+                </div>
+
+                <div class="charts-section">
+                    <h3>Visual Analytics</h3>
+                    <div class="charts-container">
+                        <div class="chart-wrapper">
+                            <canvas id="qcChart"></canvas>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="distributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-section">
+                    <button class="export-button" id="export-csv">
+                        <i class="fas fa-download"></i> Export Results (CSV)
+                    </button>
+                    <button class="export-button" id="export-pdf">
+                        <i class="fas fa-file-pdf"></i> Export Report (PDF)
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 IOOS Tool Data Interface | GSSOC 2025 Hackathon</p>
+        </footer>
     </div>
 
-    <div id="ioos-tools-section">
-        <h2>IOOS Tools</h2>
-        <button id="quality-check-button">Run Quality Control (QC) Checks</button>
-    </div>
-
-    <div id="output-section">
-        <h2>Dataset Preview:</h2>
-        <table id="data-table">
-            <thead></thead>
-            <tbody></tbody>
-        </table>
-        <h2>QC Results:</h2>
-        <div id="qc-results"></div>
-    </div>
+    <py-config>
+        [[fetch]]
+        files = ["./IOOS.py"]
+    </py-config>
 </body>
 </html>
