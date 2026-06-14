@@ -1,9 +1,3 @@
 {
-  "version": 2,
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/IOOS.html"
-    }
-  ]
+  "version": 2
 }
