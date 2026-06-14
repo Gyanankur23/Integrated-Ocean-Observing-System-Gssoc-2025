@@ -1,15 +1,10 @@
 {
   "version": 2,
-  "builds": [
+  "public": true,
+  "rewrites": [
     {
-      "src": "IOOS.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/IOOS.html"
+      "source": "/",
+      "destination": "/IOOS.html"
     }
   ]
 }
